@@ -1,15 +1,33 @@
 package tn.esprit.autoloc.domain;
-import jakarta.persistence.*;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "contrat")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contrat {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idContrat;
@@ -21,5 +39,11 @@ public class Contrat {
     private BigDecimal montantTotal;
 
     @Column(nullable = false)
-    private boolean validePaiement;
+    private boolean valide;
+
+    @OneToOne(mappedBy = "contrat", fetch = FetchType.LAZY)
+    private Reservation reservation;
+
+    @OneToMany(mappedBy = "contrat", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paiement> paiements = new ArrayList<>();
 }
