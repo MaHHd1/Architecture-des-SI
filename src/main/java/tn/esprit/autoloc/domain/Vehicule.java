@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -65,4 +66,12 @@ public class Vehicule {
             inverseJoinColumns = @JoinColumn(name = "equipement_id")
     )
     private List<Equipement> equipements = new ArrayList<>();
+
+    /**
+     * Un véhicule peut être réservé plusieurs fois au cours de sa vie.
+     * Association bidirectionnelle LAZY, sans cascade ; Reservation reste le côté propriétaire
+     * de la clé étrangère {@code vehicule_id}, et cette collection est le côté inverse.
+     */
+    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 }
