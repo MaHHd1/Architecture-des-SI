@@ -1,6 +1,7 @@
 package tn.esprit.autoloc.service;
 
 import tn.esprit.autoloc.domain.Maintenance;
+import tn.esprit.autoloc.dto.MaintenanceRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +12,9 @@ public interface MaintenanceService {
 
     Optional<Maintenance> findById(Long id);
 
-    Maintenance create(Maintenance maintenance);
+    Optional<Maintenance> create(MaintenanceRequest request);
 
-    Optional<Maintenance> update(Long id, Maintenance maintenance);
+    Optional<Maintenance> update(Long id, MaintenanceRequest request);
 
     boolean deleteById(Long id);
 }
