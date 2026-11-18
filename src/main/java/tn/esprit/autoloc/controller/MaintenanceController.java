@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,27 +55,23 @@ public class MaintenanceController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a maintenance by ID")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Maintenance found",
-                    content = @Content(schema = @Schema(implementation = MaintenanceResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Maintenance not found")
-    })
+    @ApiResponse(
+            responseCode = "200",
+            description = "Maintenance found",
+            content = @Content(schema = @Schema(implementation = MaintenanceResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Maintenance not found")
     public ResponseEntity<MaintenanceResponse> getMaintenanceById(@PathVariable("id") Long id) {
         return ResponseEntity.of(maintenanceService.findById(id).map(maintenanceMapper::toResponse));
     }
 
     @PostMapping
     @Operation(summary = "Create a maintenance")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "Maintenance created",
-                    content = @Content(schema = @Schema(implementation = MaintenanceResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid request"),
-            @ApiResponse(responseCode = "404", description = "Vehicle not found")
-    })
+    @ApiResponse(
+            responseCode = "201",
+            description = "Maintenance created",
+            content = @Content(schema = @Schema(implementation = MaintenanceResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Invalid request")
+    @ApiResponse(responseCode = "404", description = "Vehicle not found")
     public ResponseEntity<MaintenanceResponse> createMaintenance(
             @Valid @RequestBody MaintenanceRequest request) {
         return maintenanceService.create(request)
@@ -87,14 +82,12 @@ public class MaintenanceController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update a maintenance")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Maintenance updated",
-                    content = @Content(schema = @Schema(implementation = MaintenanceResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid request"),
-            @ApiResponse(responseCode = "404", description = "Maintenance or vehicle not found")
-    })
+    @ApiResponse(
+            responseCode = "200",
+            description = "Maintenance updated",
+            content = @Content(schema = @Schema(implementation = MaintenanceResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Invalid request")
+    @ApiResponse(responseCode = "404", description = "Maintenance or vehicle not found")
     public ResponseEntity<MaintenanceResponse> updateMaintenance(
             @PathVariable("id") Long id,
             @Valid @RequestBody MaintenanceRequest request) {
@@ -103,10 +96,8 @@ public class MaintenanceController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Maintenance deleted"),
-            @ApiResponse(responseCode = "404", description = "Maintenance not found")
-    })
+    @ApiResponse(responseCode = "204", description = "Maintenance deleted")
+    @ApiResponse(responseCode = "404", description = "Maintenance not found")
     public ResponseEntity<Void> deleteMaintenance(@PathVariable("id") Long id) {
         return maintenanceService.deleteById(id)
                 ? ResponseEntity.noContent().build()
