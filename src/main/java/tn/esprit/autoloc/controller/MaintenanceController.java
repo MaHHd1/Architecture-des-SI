@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tn.esprit.autoloc.dto.MaintenanceRequest;
 import tn.esprit.autoloc.dto.MaintenanceResponse;
 import tn.esprit.autoloc.mapper.MaintenanceMapper;
 import tn.esprit.autoloc.service.MaintenanceService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -47,6 +50,24 @@ public class MaintenanceController {
                     array = @ArraySchema(schema = @Schema(implementation = MaintenanceResponse.class))))
     public ResponseEntity<List<MaintenanceResponse>> getAllMaintenances() {
         List<MaintenanceResponse> responses = maintenanceService.findAll().stream()
+                .map(maintenanceMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/date-fin/entre")
+    @Operation(summary = "Get maintenances whose end date is between two dates")
+    @ApiResponse(
+            responseCode = "200",
+            description = "Maintenances retrieved successfully",
+            content = @Content(
+                    mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = MaintenanceResponse.class))))
+    public ResponseEntity<List<MaintenanceResponse>> getMaintenancesByDateFinBetween(
+            @RequestParam("debut") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debut,
+            @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin) {
+        List<MaintenanceResponse> responses = maintenanceService.findByDateFinBetween(debut, fin).stream()
                 .map(maintenanceMapper::toResponse)
                 .toList();
 

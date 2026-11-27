@@ -38,7 +38,7 @@ class VehiculeServiceTest {
         assertSame(vehicule, resultat);
         InOrder ordre = inOrder(validator, journalisationService, repository);
         ordre.verify(validator).valider(vehicule);
-        ordre.verify(journalisationService).journaliserAjout(vehicule);
+        ordre.verify(journalisationService).journaliserAjout();
         ordre.verify(repository).save(vehicule);
     }
 }

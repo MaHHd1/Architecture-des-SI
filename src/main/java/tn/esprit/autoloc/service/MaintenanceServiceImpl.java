@@ -9,6 +9,7 @@ import tn.esprit.autoloc.dto.MaintenanceRequest;
 import tn.esprit.autoloc.repository.MaintenanceRepository;
 import tn.esprit.autoloc.repository.VehiculeRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,12 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     @Transactional(readOnly = true)
     public Optional<Maintenance> findById(Long id) {
         return maintenanceRepository.findById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Maintenance> findByDateFinBetween(LocalDate debut, LocalDate fin) {
+        return maintenanceRepository.findByDateFinBetween(debut, fin);
     }
 
     @Override
