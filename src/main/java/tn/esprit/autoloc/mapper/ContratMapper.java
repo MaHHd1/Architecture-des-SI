@@ -1,18 +1,11 @@
 package tn.esprit.autoloc.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 import tn.esprit.autoloc.domain.Contrat;
 import tn.esprit.autoloc.dto.ContratResponse;
 
-@Component
-public class ContratMapper {
+@Mapper(componentModel = "spring")
+public interface ContratMapper {
 
-    public ContratResponse toResponse(Contrat contrat) {
-        return new ContratResponse(
-                contrat.getIdContrat(),
-                contrat.getDateSignature(),
-                contrat.getMontantTotal(),
-                contrat.isValide()
-        );
-    }
+    ContratResponse toResponse(Contrat contrat);
 }

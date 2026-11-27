@@ -1,21 +1,13 @@
 package tn.esprit.autoloc.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import tn.esprit.autoloc.domain.Paiement;
 import tn.esprit.autoloc.dto.PaiementResponse;
 
-@Component
-public class PaiementMapper {
+@Mapper(componentModel = "spring")
+public interface PaiementMapper {
 
-    public PaiementResponse toResponse(Paiement paiement) {
-        Long contratId = paiement.getContrat() == null ? null : paiement.getContrat().getIdContrat();
-
-        return new PaiementResponse(
-                paiement.getIdPaiement(),
-                paiement.getMontant(),
-                paiement.getDatePaiement(),
-                paiement.getModePaiement(),
-                contratId
-        );
-    }
+    @Mapping(target = "contratId", source = "contrat.idContrat")
+    PaiementResponse toResponse(Paiement paiement);
 }

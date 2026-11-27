@@ -1,21 +1,11 @@
 package tn.esprit.autoloc.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 import tn.esprit.autoloc.domain.Client;
 import tn.esprit.autoloc.dto.ClientResponse;
 
-@Component
-public class ClientMapper {
+@Mapper(componentModel = "spring")
+public interface ClientMapper {
 
-    public ClientResponse toResponse(Client client) {
-        return new ClientResponse(
-                client.getIdClient(),
-                client.getNom(),
-                client.getPrenom(),
-                client.getEmail(),
-                client.getTelephone(),
-                client.getNumPermis(),
-                client.getDateInscription()
-        );
-    }
+    ClientResponse toResponse(Client client);
 }

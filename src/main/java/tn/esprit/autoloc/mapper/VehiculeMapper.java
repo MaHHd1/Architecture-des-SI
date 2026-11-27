@@ -1,22 +1,13 @@
 package tn.esprit.autoloc.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import tn.esprit.autoloc.domain.Vehicule;
 import tn.esprit.autoloc.dto.VehiculeResponse;
 
-@Component
-public class VehiculeMapper {
+@Mapper(componentModel = "spring")
+public interface VehiculeMapper {
 
-    public VehiculeResponse toResponse(Vehicule vehicule) {
-        return new VehiculeResponse(
-                vehicule.getIdVehicule(),
-                vehicule.getImmatriculation(),
-                vehicule.getMarque(),
-                vehicule.getModele(),
-                vehicule.getCategorie(),
-                vehicule.getTarifJournalier(),
-                vehicule.getStatut(),
-                vehicule.getAgence() == null ? null : vehicule.getAgence().getIdAgence()
-        );
-    }
+    @Mapping(target = "agenceId", source = "agence.idAgence")
+    VehiculeResponse toResponse(Vehicule vehicule);
 }
