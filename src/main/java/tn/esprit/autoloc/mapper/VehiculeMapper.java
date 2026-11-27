@@ -15,7 +15,8 @@ public class VehiculeMapper {
                 vehicule.getModele(),
                 vehicule.getCategorie(),
                 vehicule.getTarifJournalier(),
-                vehicule.getStatut()
+                vehicule.getStatut(),
+                vehicule.getAgence() == null ? null : vehicule.getAgence().getIdAgence()
         );
     }
 }

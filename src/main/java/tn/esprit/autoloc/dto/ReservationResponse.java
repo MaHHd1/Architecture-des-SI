@@ -8,6 +8,9 @@ public record ReservationResponse(
         Long idReservation,
         LocalDate dateDebut,
         LocalDate dateFin,
-        StatutReservation statut
+        StatutReservation statut,
+        Long clientId,
+        Long vehiculeId,
+        Long contratId
 ) {
 }

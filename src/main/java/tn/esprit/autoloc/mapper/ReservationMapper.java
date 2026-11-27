@@ -12,7 +12,10 @@ public class ReservationMapper {
                 reservation.getIdReservation(),
                 reservation.getDateDebut(),
                 reservation.getDateFin(),
-                reservation.getStatut()
+                reservation.getStatut(),
+                reservation.getClient() == null ? null : reservation.getClient().getIdClient(),
+                reservation.getVehicule() == null ? null : reservation.getVehicule().getIdVehicule(),
+                reservation.getContrat() == null ? null : reservation.getContrat().getIdContrat()
         );
     }
 }

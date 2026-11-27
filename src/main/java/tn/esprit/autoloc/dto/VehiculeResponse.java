@@ -12,6 +12,7 @@ public record VehiculeResponse(
         String modele,
         CategorieVehicule categorie,
         BigDecimal tarifJournalier,
-        StatutVehicule statut
+        StatutVehicule statut,
+        Long agenceId
 ) {
 }
